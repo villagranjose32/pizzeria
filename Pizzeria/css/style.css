@@ -1,0 +1,198 @@
+/* Importar una fuente similar si quieres, por ejemplo Montserrat de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif; /* O la fuente que prefieras */
+    background-color: #1a1a1a; /* Fondo oscuro similar al de la imagen */
+    color: #f0f0f0; /* Texto claro */
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar el contenido */
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+.page-header h1 {
+    font-size: 2.5em;
+    color: #e0e0e0;
+}
+
+.menu-container {
+    width: 100%;
+    max-width: 1200px; /* Ancho máximo para el menú */
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Espacio entre filas de pizzas */
+}
+
+.pizza-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 3 columnas en pantallas grandes, se adaptan */
+    gap: 20px; /* Espacio entre tarjetas de pizza */
+    justify-content: center; /* Centrar las tarjetas si no llenan la fila */
+}
+
+.pizza-card {
+    background-color: #2b2b2b; /* Fondo de tarjeta un poco más claro que el body */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 15px; /* Espacio para el footer */
+}
+
+.pizza-card img {
+    width: 100%;
+    height: 200px; /* Altura fija para las imágenes de pizza */
+    object-fit: cover; /* Asegura que la imagen cubra el área sin distorsionarse */
+    border-bottom: 1px solid #444; /* Separador sutil */
+}
+
+.pizza-title {
+    font-size: 1.5em;
+    color: #e0e0e0;
+    margin: 15px 0 5px;
+    font-weight: 600;
+}
+
+.pizza-description {
+    font-size: 0.9em;
+    color: #bbb;
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+
+.pizza-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
+.pizza-price {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #8aff8a; /* Verde brillante para el precio, similar a la imagen */
+}
+
+.btn-pedir {
+    background-color: #e62b2b; /* Rojo para el botón "Pedir" */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+.btn-quantity {
+    background-color: #f0f0f0; /* Color blanco/gris claro */
+    color: #333; /* Texto oscuro */
+    border: 1px solid #ccc;
+    padding: 10px 20px; /* Ajustado: mismo padding que el botón "Pedir" */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em; /* Ajustado: mismo tamaño de fuente que el botón "Pedir" */
+    font-weight: 600;
+    margin-right: 10px; /* Espacio entre este botón y el de "Pedir" */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-quantity:hover {
+    background-color: #e0e0e0;
+    border-color: #aaa;
+}
+
+.btn-pedir:hover {
+    background-color: #cc0000;
+}
+
+/* Estilos para el footer del pedido */
+.order-summary {
+    background-color: #2b2b2b;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    margin-top: 50px;
+    width: 100%;
+    max-width: 600px; /* Ancho del formulario final */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.summary-item label {
+    font-size: 1.1em;
+    color: #e0e0e0;
+    margin-bottom: 5px;
+}
+
+.summary-item input[type="text"] {
+    background-color: #3a3a3a;
+    border: 1px solid #555;
+    padding: 10px;
+    border-radius: 5px;
+    color: #f0f0f0;
+    font-size: 1em;
+}
+
+.summary-item input[readonly] {
+    background-color: #4a4a4a; /* Fondo diferente para campos de solo lectura */
+    opacity: 0.8;
+}
+
+.btn-finalizar-pedido {
+    background-color: #4CAF50; /* Verde para el botón "Finalizar Pedido" */
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    align-self: flex-end; /* Alinea el botón a la derecha */
+}
+
+.btn-finalizar-pedido:hover {
+    background-color: #45a049;
+}
+
+/* Media Queries para responsividad básica */
+@media (max-width: 900px) {
+    .pizza-row {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajusta a 2 columnas en pantallas medianas */
+    }
+}
+
+@media (max-width: 600px) {
+    .pizza-row {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+    .pizza-card img {
+        height: 250px; /* Un poco más alto para móviles */
+    }
+    .page-header h1 {
+        font-size: 2em;
+    }
+    body {
+        padding: 15px;
+    }
+}
