@@ -20,7 +20,7 @@
                 <p class="pizza-description">Salsa, muzza norrella</p>
                 <div class="pizza-footer">
                     <span class="pizza-price">$4000</span>
-                    <button class="btn-quantity" data-quantity="1">1</button>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
                     <button class="btn-pedir">Pedir</button>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                 <p class="pizza-description">Salsa, mozzarella</p>
                 <div class="pizza-footer">
                     <span class="pizza-price">$4200</span>
-                    <button class="btn-quantity" data-quantity="1">1</button>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
                     <button class="btn-pedir">Pedir</button>
                 </div>
             </div>
@@ -157,13 +157,26 @@
     <footer class="order-summary">
         <div class="summary-item">
             <label for="nombre">Nombre y Apellido</label>
-            <input type="text" id="nombre" name="nombre">
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="summary-item">
+            <label for="direccion">Dirección de Envío</label>
+            <input type="text" id="direccion" name="direccion" placeholder="Ingresa tu dirección completa" required>
+        </div>
+        <div class="summary-item">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Ej: +54 9 11 1234-5678" required>
+        </div>
+        <div class="summary-item">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" name="observaciones" placeholder="Ej: Sin cebolla, cocción especial, etc." rows="3"></textarea>
         </div>
         <div class="summary-item">
             <label for="total">Monto Total</label>
             <input type="text" id="total" name="total" value="$0" readonly>
         </div>
-        <button class="btn-finalizar-pedido">Finalizar Pedido</button>
+        <div class="cart-items" id="cart-items"></div>
+        <button class="btn-finalizar-pedido" id="btn-finalizar">Enviar Pedido por WhatsApp</button>
     </footer>
 
     <script src="js/main.js"></script>
