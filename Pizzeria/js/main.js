@@ -12,66 +12,116 @@ class PizzeriaCart {
     }
 
     setupEventListeners() {
-        // Event listeners para botones de cantidad
-        document.querySelectorAll('.btn-quantity').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.changeQuantity(e.target);
-            });
-        });
+        // Event listeners para botones de tipo de pizza (Entera/Media)
+        this.attachPizzaTypeListeners();
 
         // Event listeners para botones pedir
-        document.querySelectorAll('.btn-pedir').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                this.addToCart(e.target);
-            });
-        });
+        this.attachPedirListeners();
 
         // Event listener para finalizar pedido
         document.getElementById('btn-finalizar').addEventListener('click', () => {
             this.finalizarPedido();
         });
+
+        // Event listeners para el carrito
+        document.getElementById('cart-btn').addEventListener('click', () => {
+            this.openCartPanel();
+        });
+
+        document.getElementById('close-cart').addEventListener('click', () => {
+            this.closeCartPanel();
+        });
+
+        document.getElementById('clear-cart').addEventListener('click', () => {
+            this.clearCart();
+        });
+
+        document.getElementById('continue-shopping').addEventListener('click', () => {
+            this.closeCartPanel();
+        });
+
+        document.getElementById('proceed-checkout').addEventListener('click', () => {
+            this.proceedToCheckout();
+        });
+
+        // Cerrar carrito al hacer clic fuera
+        document.getElementById('cart-panel').addEventListener('click', (e) => {
+            if (e.target.id === 'cart-panel') {
+                this.closeCartPanel();
+            }
+        });
     }
 
-    changeQuantity(btn) {
-        let currentQuantity = parseInt(btn.textContent);
-        currentQuantity = currentQuantity >= 5 ? 1 : currentQuantity + 1;
-        btn.textContent = currentQuantity;
-        btn.setAttribute('data-quantity', currentQuantity);
+    attachPizzaTypeListeners() {
+        document.querySelectorAll('.btn-pizza-type').forEach(btn => {
+            btn.removeEventListener('click', this.togglePizzaType);
+            btn.addEventListener('click', (e) => {
+                this.togglePizzaType(e.target);
+            });
+        });
+    }
+
+    attachPedirListeners() {
+        document.querySelectorAll('.btn-pedir').forEach(btn => {
+            btn.removeEventListener('click', this.addToCart);
+            btn.addEventListener('click', (e) => {
+                this.addToCart(e.target);
+            });
+        });
+    }
+
+    togglePizzaType(btn) {
+        const currentType = btn.getAttribute('data-type');
+        if (currentType === 'entera') {
+            btn.setAttribute('data-type', 'media');
+            btn.textContent = 'Media';
+            btn.classList.add('media');
+        } else {
+            btn.setAttribute('data-type', 'entera');
+            btn.textContent = 'Entera';
+            btn.classList.remove('media');
+        }
     }
 
     addToCart(btn) {
         const pizzaCard = btn.closest('.pizza-card');
         const pizzaTitle = pizzaCard.querySelector('.pizza-title').textContent;
-        const pizzaPrice = parseInt(pizzaCard.querySelector('.pizza-price').textContent.replace('$', ''));
-        const quantityBtn = pizzaCard.querySelector('.btn-quantity');
-        const quantity = parseInt(quantityBtn.getAttribute('data-quantity'));
+        const pizzaPriceElement = pizzaCard.querySelector('.pizza-price');
+        const basePrice = parseInt(pizzaPriceElement.textContent.replace('$', ''));
+        const typeBtn = pizzaCard.querySelector('.btn-pizza-type');
+        const pizzaType = typeBtn.getAttribute('data-type');
+        
+        // Calcular precio según el tipo (media pizza = 60% del precio)
+        const pizzaPrice = pizzaType === 'media' ? Math.round(basePrice * 0.6) : basePrice;
+        const pizzaDescription = `${pizzaTitle} (${pizzaType === 'entera' ? 'Entera' : 'Media'})`;
 
-        // Buscar si la pizza ya está en el carrito
-        const existingItem = this.cart.find(item => item.name === pizzaTitle);
+        // Buscar si la pizza con el mismo tipo ya está en el carrito
+        const existingItem = this.cart.find(item => 
+            item.name === pizzaTitle && item.type === pizzaType
+        );
         
         if (existingItem) {
-            existingItem.quantity += quantity;
+            existingItem.quantity += 1;
         } else {
             this.cart.push({
                 name: pizzaTitle,
+                type: pizzaType,
+                description: pizzaDescription,
                 price: pizzaPrice,
-                quantity: quantity
+                quantity: 1
             });
         }
 
-        // Resetear cantidad a 1 después de agregar
-        quantityBtn.textContent = '1';
-        quantityBtn.setAttribute('data-quantity', '1');
-
         this.updateDisplay();
-        this.showAddedMessage(pizzaTitle, quantity);
+        this.showAddedMessage(pizzaDescription, 1);
+        this.updateCartCount();
     }
 
-    showAddedMessage(pizzaName, quantity) {
+    showAddedMessage(pizzaDescription, quantity) {
         // Crear mensaje temporal
         const message = document.createElement('div');
         message.className = 'added-message';
-        message.textContent = `${quantity} ${pizzaName} agregada al pedido`;
+        message.textContent = `${quantity} ${pizzaDescription} agregada al pedido`;
         message.style.cssText = `
             position: fixed;
             top: 20px;
@@ -89,13 +139,16 @@ class PizzeriaCart {
         
         // Remover mensaje después de 2 segundos
         setTimeout(() => {
-            document.body.removeChild(message);
+            if (document.body.contains(message)) {
+                document.body.removeChild(message);
+            }
         }, 2000);
     }
 
     updateDisplay() {
         this.calculateTotal();
         this.displayCartItems();
+        this.updateCartCount();
         document.getElementById('total').value = `$${this.total}`;
     }
 
@@ -111,20 +164,23 @@ class PizzeriaCart {
             return;
         }
 
-        const cartHTML = this.cart.map(item => `
+        const cartHTML = this.cart.map((item, index) => `
             <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee;">
-                <span style="font-weight: bold;">${item.name}</span>
-                <span style="color: #666;">x${item.quantity}</span>
-                <span style="font-weight: bold; color: #e74c3c;">$${item.price * item.quantity}</span>
-                <button onclick="pizzaCart.removeFromCart('${item.name}')" style="background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">×</button>
+                <div style="flex: 1;">
+                    <span style="font-weight: bold;">${item.description}</span>
+                    <div style="font-size: 0.9em; color: #888;">$${item.price} c/u</div>
+                </div>
+                <span style="color: #666; margin: 0 10px;">x${item.quantity}</span>
+                <span style="font-weight: bold; color: #e74c3c; margin: 0 10px;">$${item.price * item.quantity}</span>
+                <button onclick="pizzaCart.removeFromCart(${index})" style="background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">×</button>
             </div>
         `).join('');
 
         cartItemsContainer.innerHTML = cartHTML;
     }
 
-    removeFromCart(pizzaName) {
-        this.cart = this.cart.filter(item => item.name !== pizzaName);
+    removeFromCart(index) {
+        this.cart.splice(index, 1);
         this.updateDisplay();
     }
 
@@ -132,7 +188,7 @@ class PizzeriaCart {
         // Validar campos obligatorios
         const nombre = document.getElementById('nombre').value.trim();
         const direccion = document.getElementById('direccion').value.trim();
-        const telefono = document.getElementById('telefono').value.trim();
+        const observaciones = document.getElementById('observaciones').value.trim();
 
         if (!nombre) {
             alert('Por favor, ingresa tu nombre y apellido');
@@ -146,38 +202,38 @@ class PizzeriaCart {
             return;
         }
 
-        if (!telefono) {
-            alert('Por favor, ingresa tu número de teléfono');
-            document.getElementById('telefono').focus();
-            return;
-        }
-
         if (this.cart.length === 0) {
             alert('No hay productos en el carrito. Agrega algunas pizzas antes de finalizar el pedido.');
             return;
         }
 
-        this.enviarWhatsApp(nombre, direccion, telefono);
+        this.enviarWhatsApp(nombre, direccion, observaciones);
     }
 
-    enviarWhatsApp(nombre, direccion, telefono) {
+    enviarWhatsApp(nombre, direccion, observaciones) {
         // Número de WhatsApp de la pizzería (reemplaza con el número real)
         const numeroWhatsApp = '5491120290381'; // Número actualizado de la pizzería
         
         // Construir mensaje para WhatsApp
         let mensaje = `🍕 *NUEVO PEDIDO DE PIZZERÍA* 🍕\n\n`;
         mensaje += `👤 *Cliente:* ${nombre}\n`;
-        mensaje += `📍 *Dirección:* ${direccion}\n`;
-        mensaje += `📱 *Teléfono:* ${telefono}\n\n`;
+        mensaje += `📍 *Dirección:* ${direccion}\n\n`;
+        
+        if (observaciones) {
+            mensaje += `📝 *Observaciones:* ${observaciones}\n\n`;
+        }
+        
         mensaje += `🛒 *DETALLE DEL PEDIDO:*\n`;
-        mensaje += `${'-'.repeat(30)}\n`;
+        mensaje += `${'-'.repeat(40)}\n`;
 
         this.cart.forEach(item => {
-            mensaje += `• ${item.name} x${item.quantity} - $${item.price * item.quantity}\n`;
+            mensaje += `• ${item.description}\n`;
+            mensaje += `  Cantidad: ${item.quantity} - Precio: $${item.price} c/u\n`;
+            mensaje += `  Subtotal: $${item.price * item.quantity}\n\n`;
         });
 
-        mensaje += `${'-'.repeat(30)}\n`;
-        mensaje += `💰 *TOTAL: $${this.total}*\n\n`;
+        mensaje += `${'-'.repeat(40)}\n`;
+        mensaje += `💰 *TOTAL GENERAL: $${this.total}*\n\n`;
         mensaje += `⏰ Fecha: ${new Date().toLocaleDateString('es-AR')}\n`;
         mensaje += `🕐 Hora: ${new Date().toLocaleTimeString('es-AR')}`;
 
@@ -231,6 +287,91 @@ class PizzeriaCart {
         document.body.appendChild(confirmacion);
     }
 
+    updateCartCount() {
+        const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cart-count').textContent = totalItems;
+    }
+
+    openCartPanel() {
+        document.getElementById('cart-panel').style.display = 'flex';
+        this.displayCartDetails();
+    }
+
+    closeCartPanel() {
+        document.getElementById('cart-panel').style.display = 'none';
+    }
+
+    displayCartDetails() {
+        const cartDetails = document.getElementById('cart-details');
+        
+        if (this.cart.length === 0) {
+            cartDetails.innerHTML = `
+                <div class="empty-cart">
+                    <h3>🛒 Tu carrito está vacío</h3>
+                    <p>Agrega algunas pizzas deliciosas para comenzar tu pedido</p>
+                </div>
+            `;
+            return;
+        }
+
+        let cartHTML = '';
+        this.cart.forEach((item, index) => {
+            cartHTML += `
+                <div class="cart-item-detail">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.description}</div>
+                        <div class="cart-item-description">Precio unitario: $${item.price}</div>
+                        <div class="cart-item-price">Subtotal: $${item.price * item.quantity}</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <div class="quantity-control">
+                            <button class="qty-btn" onclick="pizzaCart.changeItemQuantity(${index}, -1)">-</button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="qty-btn" onclick="pizzaCart.changeItemQuantity(${index}, 1)">+</button>
+                        </div>
+                        <button class="remove-item" onclick="pizzaCart.removeFromCart(${index})">🗑️</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        cartHTML += `
+            <div class="cart-total">
+                <div class="cart-total-text">Total del pedido:</div>
+                <div class="cart-total-amount">$${this.total}</div>
+            </div>
+        `;
+
+        cartDetails.innerHTML = cartHTML;
+    }
+
+    changeItemQuantity(index, change) {
+        if (this.cart[index]) {
+            this.cart[index].quantity += change;
+            if (this.cart[index].quantity <= 0) {
+                this.cart.splice(index, 1);
+            }
+            this.updateDisplay();
+            this.displayCartDetails();
+        }
+    }
+
+    clearCart() {
+        if (confirm('¿Estás seguro de que quieres vaciar el carrito?')) {
+            this.cart = [];
+            this.updateDisplay();
+            this.displayCartDetails();
+        }
+    }
+
+    proceedToCheckout() {
+        this.closeCartPanel();
+        // Scroll hacia el formulario de pedido
+        document.querySelector('.order-summary').scrollIntoView({ 
+            behavior: 'smooth' 
+        });
+    }
+
     limpiarCarrito() {
         this.cart = [];
         this.updateDisplay();
@@ -238,7 +379,14 @@ class PizzeriaCart {
         // Limpiar formulario
         document.getElementById('nombre').value = '';
         document.getElementById('direccion').value = '';
-        document.getElementById('telefono').value = '';
+        document.getElementById('observaciones').value = '';
+        
+        // Resetear todos los botones a "Entera"
+        document.querySelectorAll('.btn-pizza-type').forEach(btn => {
+            btn.setAttribute('data-type', 'entera');
+            btn.textContent = 'Entera';
+            btn.classList.remove('media');
+        });
     }
 }
 
