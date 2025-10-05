@@ -119,7 +119,7 @@ class PizzeriaAdmin {
             const pizzaItem = document.createElement('div');
             pizzaItem.className = 'admin-pizza-item';
             pizzaItem.innerHTML = `
-                <img src="${pizza.image}" alt="${pizza.name}" class="admin-pizza-image" onerror="this.src='images/placeholder.jpg'">
+                <img src="${pizza.image}" alt="${pizza.name}" class="admin-pizza-image" onerror="this.src='images/placeholder.svg'">
                 <div class="admin-pizza-info">
                     <input type="text" value="${pizza.name}" onchange="pizzaAdmin.updatePizza(${pizza.id}, 'name', this.value)">
                     <textarea onchange="pizzaAdmin.updatePizza(${pizza.id}, 'description', this.value)">${pizza.description}</textarea>
@@ -193,7 +193,7 @@ class PizzeriaAdmin {
             name: name,
             description: description,
             price: price,
-            image: 'images/placeholder.jpg' // Imagen por defecto
+            image: 'images/placeholder.svg' // Imagen por defecto
         };
 
         if (imageFile) {
