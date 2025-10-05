@@ -4,12 +4,66 @@ class PizzeriaCart {
         this.cart = [];
         this.total = 0;
         this.deliveryType = 'delivery'; // Por defecto envío a domicilio
+        this.pizzaData = {};
+        this.whatsappNumber = '543516351524'; // Número por defecto
         this.init();
     }
 
-    init() {
+    async init() {
+        await this.loadBackendData();
         this.setupEventListeners();
         this.updateDisplay();
+    }
+
+    // Cargar datos desde el backend
+    async loadBackendData() {
+        try {
+            // Cargar datos de pizzas
+            const pizzaResponse = await fetch('/api/pizzas');
+            if (pizzaResponse.ok) {
+                this.pizzaData = await pizzaResponse.json();
+                this.updatePizzaDisplay();
+            }
+
+            // Cargar configuración de WhatsApp
+            const whatsappResponse = await fetch('/api/whatsapp-config');
+            if (whatsappResponse.ok) {
+                const config = await whatsappResponse.json();
+                this.whatsappNumber = config.whatsappNumber || '543516351524';
+            }
+        } catch (error) {
+            console.error('Error cargando datos del backend:', error);
+        }
+    }
+
+    // Actualizar visualización de pizzas con datos del backend
+    updatePizzaDisplay() {
+        Object.keys(this.pizzaData).forEach(pizzaId => {
+            const pizzaData = this.pizzaData[pizzaId];
+            
+            // Actualizar precios
+            if (pizzaData.entirePrice) {
+                const entirePriceElement = document.querySelector(`[data-pizza="${pizzaId}"] .price-entire`);
+                if (entirePriceElement) {
+                    entirePriceElement.textContent = `$${pizzaData.entirePrice}`;
+                }
+            }
+            
+            if (pizzaData.halfPrice) {
+                const halfPriceElement = document.querySelector(`[data-pizza="${pizzaId}"] .price-half`);
+                if (halfPriceElement) {
+                    halfPriceElement.textContent = `$${pizzaData.halfPrice}`;
+                }
+            }
+            
+            // Actualizar imagen
+            if (pizzaData.imageUrl) {
+                const imageElement = document.querySelector(`[data-pizza="${pizzaId}"] img`);
+                if (imageElement) {
+                    imageElement.src = pizzaData.imageUrl;
+                }
+            }
+        });
     }
 
     setupEventListeners() {
@@ -96,13 +150,30 @@ class PizzeriaCart {
     addToCart(btn) {
         const pizzaCard = btn.closest('.pizza-card');
         const pizzaTitle = pizzaCard.querySelector('.pizza-title').textContent;
-        const pizzaPriceElement = pizzaCard.querySelector('.pizza-price');
-        const basePrice = parseInt(pizzaPriceElement.textContent.replace('$', ''));
+        const pizzaId = pizzaCard.getAttribute('data-pizza');
         const typeBtn = pizzaCard.querySelector('.btn-pizza-type');
         const pizzaType = typeBtn.getAttribute('data-type');
         
-        // Calcular precio según el tipo (media pizza = 60% del precio)
-        const pizzaPrice = pizzaType === 'media' ? Math.round(basePrice * 0.6) : basePrice;
+        // Obtener precio desde los datos del backend o usar precio por defecto
+        let pizzaPrice;
+        if (this.pizzaData[pizzaId]) {
+            if (pizzaType === 'entera' && this.pizzaData[pizzaId].entirePrice) {
+                pizzaPrice = this.pizzaData[pizzaId].entirePrice;
+            } else if (pizzaType === 'media' && this.pizzaData[pizzaId].halfPrice) {
+                pizzaPrice = this.pizzaData[pizzaId].halfPrice;
+            } else {
+                // Fallback: usar precio del HTML
+                const pizzaPriceElement = pizzaCard.querySelector('.pizza-price');
+                const basePrice = parseInt(pizzaPriceElement.textContent.replace('$', ''));
+                pizzaPrice = pizzaType === 'media' ? Math.round(basePrice * 0.6) : basePrice;
+            }
+        } else {
+            // Fallback: usar precio del HTML
+            const pizzaPriceElement = pizzaCard.querySelector('.pizza-price');
+            const basePrice = parseInt(pizzaPriceElement.textContent.replace('$', ''));
+            pizzaPrice = pizzaType === 'media' ? Math.round(basePrice * 0.6) : basePrice;
+        }
+        
         const pizzaDescription = `${pizzaTitle} (${pizzaType === 'entera' ? 'Entera' : 'Media'})`;
 
         // Buscar si la pizza con el mismo tipo ya está en el carrito
@@ -256,8 +327,8 @@ class PizzeriaCart {
     }
 
     enviarWhatsApp(nombre, direccion, observaciones) {
-        // Número de WhatsApp de la pizzería (reemplaza con el número real)
-        const numeroWhatsApp = '5491120290381'; // Número actualizado de la pizzería
+        // Usar número de WhatsApp del backend
+        const numeroWhatsApp = this.whatsappNumber;
         
         // Construir mensaje para WhatsApp
         let mensaje = `🍕 *NUEVO PEDIDO DE PIZZERÍA* 🍕\n\n`;

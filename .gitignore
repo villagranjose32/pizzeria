@@ -27,3 +27,14 @@ Thumbs.db
 
 # Cache
 .cache/
+
+# Backend data files
+pizza-data.json
+whatsapp-config.json
+
+# Uploaded images (except placeholder)
+Pizzeria/uploads/*.jpg
+Pizzeria/uploads/*.png
+Pizzeria/uploads/*.jpeg
+Pizzeria/uploads/*.gif
+!Pizzeria/uploads/placeholder.txt

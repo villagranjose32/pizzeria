@@ -1,20 +1,24 @@
 {
   "name": "pizzeria",
   "version": "1.0.0",
-  "description": "Sitio web de pizzería con carrito de compras",
-  "main": "index.html",
+  "description": "Sistema de pedidos de pizzería con backend completo",
+  "main": "server.js",
   "scripts": {
-    "start": "npx http-server . -p $PORT --cors",
-    "dev": "npx http-server . -p 8080 --cors",
-    "build": "echo 'Static site - no build required'"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
-    "http-server": "^14.1.1"
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   },
   "engines": {
     "node": ">=14"
   },
-  "keywords": ["pizzeria", "restaurant", "food", "delivery"],
+  "keywords": ["pizzeria", "restaurant", "food", "delivery", "backend"],
   "author": "villagranjose32",
   "license": "MIT"
 }
