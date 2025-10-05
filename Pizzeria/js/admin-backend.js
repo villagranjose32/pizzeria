@@ -322,7 +322,6 @@ class PizzeriaAdmin {
                     imageElement.src = pizzaData.imageUrl;
                 }
             }
-            }
         });
     }
 
