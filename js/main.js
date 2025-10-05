@@ -257,7 +257,7 @@ class PizzeriaCart {
 
     enviarWhatsApp(nombre, direccion, observaciones) {
         // Número de WhatsApp de la pizzería (reemplaza con el número real)
-        const numeroWhatsApp = '5491120290381'; // Número actualizado de la pizzería
+        const numeroWhatsApp = '54930290381'; // Número actualizado de la pizzería
         
         // Construir mensaje para WhatsApp
         let mensaje = `🍕 *NUEVO PEDIDO DE PIZZERÍA* 🍕\n\n`;
