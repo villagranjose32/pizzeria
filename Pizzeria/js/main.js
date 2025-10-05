@@ -3,6 +3,7 @@ class PizzeriaCart {
     constructor() {
         this.cart = [];
         this.total = 0;
+        this.deliveryType = 'delivery'; // Por defecto envío a domicilio
         this.init();
     }
 
@@ -49,6 +50,15 @@ class PizzeriaCart {
             if (e.target.id === 'cart-panel') {
                 this.closeCartPanel();
             }
+        });
+
+        // Event listeners para opciones de entrega
+        document.getElementById('delivery-btn').addEventListener('click', () => {
+            this.setDeliveryType('delivery');
+        });
+
+        document.getElementById('pickup-btn').addEventListener('click', () => {
+            this.setDeliveryType('pickup');
         });
     }
 
@@ -115,6 +125,41 @@ class PizzeriaCart {
         this.updateDisplay();
         this.showAddedMessage(pizzaDescription, 1);
         this.updateCartCount();
+    }
+
+    setDeliveryType(type) {
+        this.deliveryType = type;
+        
+        // Actualizar botones activos
+        document.querySelectorAll('.delivery-option').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        if (type === 'delivery') {
+            document.getElementById('delivery-btn').classList.add('active');
+            this.showAddressField();
+        } else {
+            document.getElementById('pickup-btn').classList.add('active');
+            this.hideAddressField();
+        }
+    }
+
+    showAddressField() {
+        const container = document.getElementById('direccion-container');
+        const input = document.getElementById('direccion');
+        
+        container.classList.remove('hidden');
+        input.required = true;
+        input.placeholder = 'Ingresa tu dirección completa';
+    }
+
+    hideAddressField() {
+        const container = document.getElementById('direccion-container');
+        const input = document.getElementById('direccion');
+        
+        container.classList.add('hidden');
+        input.required = false;
+        input.value = ''; // Limpiar el campo
     }
 
     showAddedMessage(pizzaDescription, quantity) {

@@ -209,6 +209,57 @@ body {
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
+/* Estilos para opciones de entrega */
+.delivery-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.delivery-option {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #555;
+    background-color: #4a4a4a;
+    color: #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.delivery-option:hover {
+    border-color: #4CAF50;
+    background-color: #5a5a5a;
+}
+
+.delivery-option.active {
+    border-color: #4CAF50;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.delivery-option:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+/* Animación para mostrar/ocultar dirección */
+#direccion-container {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+#direccion-container.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 .summary-item input[readonly] {
     background-color: #4a4a4a; /* Fondo diferente para campos de solo lectura */
     opacity: 0.8;

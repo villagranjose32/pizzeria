@@ -218,10 +218,24 @@
             <label for="nombre">Nombre y Apellido</label>
             <input type="text" id="nombre" name="nombre" required>
         </div>
+        
         <div class="summary-item">
+            <label>Tipo de Entrega</label>
+            <div class="delivery-options">
+                <button type="button" id="delivery-btn" class="delivery-option active" data-type="delivery">
+                    🚚 Envío a Domicilio
+                </button>
+                <button type="button" id="pickup-btn" class="delivery-option" data-type="pickup">
+                    🏪 Retiro en Local
+                </button>
+            </div>
+        </div>
+        
+        <div class="summary-item" id="direccion-container">
             <label for="direccion">Dirección de Envío</label>
             <input type="text" id="direccion" name="direccion" placeholder="Ingresa tu dirección completa" required>
         </div>
+        
         <div class="summary-item">
             <label for="observaciones">Observaciones</label>
             <textarea id="observaciones" name="observaciones" placeholder="Ej: Sin cebolla, cocción especial, etc." rows="3"></textarea>
