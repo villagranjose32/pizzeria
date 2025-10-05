@@ -56,6 +56,14 @@ class PizzeriaCart {
                 }
             }
             
+            // Actualizar ingredientes
+            if (pizzaData.ingredients) {
+                const descriptionElement = document.querySelector(`[data-pizza="${pizzaId}"] .pizza-description`);
+                if (descriptionElement) {
+                    descriptionElement.textContent = pizzaData.ingredients;
+                }
+            }
+            
             // Actualizar imagen
             if (pizzaData.imageUrl) {
                 const imageElement = document.querySelector(`[data-pizza="${pizzaId}"] img`);

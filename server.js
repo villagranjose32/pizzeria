@@ -130,6 +130,28 @@ app.put('/api/pizzas/:pizzaId/price', (req, res) => {
     }
 });
 
+// Actualizar datos completos de pizza (precio + ingredientes)
+app.put('/api/pizzas/:pizzaId/data', (req, res) => {
+    const { pizzaId } = req.params;
+    const { entirePrice, halfPrice, ingredients } = req.body;
+    
+    const data = readPizzaData();
+    
+    if (!data[pizzaId]) {
+        data[pizzaId] = {};
+    }
+    
+    data[pizzaId].entirePrice = entirePrice;
+    data[pizzaId].halfPrice = halfPrice;
+    data[pizzaId].ingredients = ingredients;
+    
+    if (savePizzaData(data)) {
+        res.json({ success: true, message: 'Datos de pizza actualizados correctamente' });
+    } else {
+        res.status(500).json({ success: false, message: 'Error al guardar' });
+    }
+});
+
 // Subir imagen de pizza
 app.post('/api/pizzas/:pizzaId/image', upload.single('image'), (req, res) => {
     const { pizzaId } = req.params;

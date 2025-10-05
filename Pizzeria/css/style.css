@@ -716,6 +716,189 @@ body {
     margin-bottom: 20px;
 }
 
+/* Estilos para login de admin */
+.admin-login {
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+.login-form input {
+    padding: 12px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #ff6b35;
+}
+
+/* Estilos para configuración de WhatsApp */
+.whatsapp-config {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.whatsapp-config label {
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+.whatsapp-config input {
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    font-size: 16px;
+}
+
+.whatsapp-config input:focus {
+    outline: none;
+    border-color: #25d366;
+}
+
+/* Estilos para lista de pizzas en admin */
+.pizzas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-pizza-card {
+    background: #4a4a4a;
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid #555;
+}
+
+.admin-pizza-card h3 {
+    color: #ff6b35;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.admin-pizza-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.price-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.price-inputs label {
+    color: #e0e0e0;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.price-inputs input {
+    padding: 8px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.ingredients-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ingredients-section label {
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+.ingredients-section textarea {
+    padding: 8px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.image-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.image-upload label {
+    color: #e0e0e0;
+    font-weight: bold;
+}
+
+.current-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 2px solid #555;
+}
+
+.image-upload input[type="file"] {
+    padding: 5px;
+    background: #1a1a1a;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: #e0e0e0;
+}
+
+.admin-buttons {
+    grid-column: span 2;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.save-btn, .upload-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.save-btn {
+    background: #27ae60;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #229954;
+}
+
+.upload-btn {
+    background: #3498db;
+    color: white;
+}
+
+.upload-btn:hover {
+    background: #2980b9;
+}
+
 .admin-pizza-item {
     background: #4a4a4a;
     padding: 15px;

@@ -180,6 +180,12 @@ class PizzeriaAdmin {
                         <input type="number" id="half-${pizza.id}" value="${pizzaData.halfPrice || ''}" placeholder="0">
                     </div>
                     
+                    <div class="ingredients-section">
+                        <label>Ingredientes:</label>
+                        <textarea id="ingredients-${pizza.id}" placeholder="Ej: Salsa, mozzarella, jamón, oregano..." 
+                                rows="3">${pizzaData.ingredients || ''}</textarea>
+                    </div>
+                    
                     <div class="image-upload">
                         <label>Imagen actual:</label>
                         <img src="${pizzaData.imageUrl ? pizzaData.imageUrl : `images/${pizza.id}.jfif`}" 
@@ -190,8 +196,8 @@ class PizzeriaAdmin {
                     </div>
                     
                     <div class="admin-buttons">
-                        <button onclick="pizzeriaAdmin.updatePizzaPrice('${pizza.id}')" class="save-btn">
-                            Guardar Precio
+                        <button onclick="pizzeriaAdmin.updatePizzaData('${pizza.id}')" class="save-btn">
+                            Guardar Todo
                         </button>
                         <button onclick="pizzeriaAdmin.uploadImage('${pizza.id}')" class="upload-btn">
                             Subir Imagen
@@ -204,10 +210,11 @@ class PizzeriaAdmin {
         });
     }
 
-    // Actualizar precio de pizza
-    async updatePizzaPrice(pizzaId) {
+    // Actualizar datos completos de pizza (precio e ingredientes)
+    async updatePizzaData(pizzaId) {
         const entirePrice = document.getElementById(`entire-${pizzaId}`).value;
         const halfPrice = document.getElementById(`half-${pizzaId}`).value;
+        const ingredients = document.getElementById(`ingredients-${pizzaId}`).value;
 
         if (!entirePrice || !halfPrice) {
             alert('Por favor complete ambos precios');
@@ -215,29 +222,35 @@ class PizzeriaAdmin {
         }
 
         try {
-            const response = await fetch(`/api/pizzas/${pizzaId}/price`, {
+            const response = await fetch(`/api/pizzas/${pizzaId}/data`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     entirePrice: parseFloat(entirePrice),
-                    halfPrice: parseFloat(halfPrice)
+                    halfPrice: parseFloat(halfPrice),
+                    ingredients: ingredients.trim()
                 }),
             });
 
             const result = await response.json();
 
             if (result.success) {
-                alert('Precio actualizado correctamente');
+                alert('Datos de pizza actualizados correctamente');
                 await this.loadPizzaData(); // Recargar datos
             } else {
-                alert('Error al actualizar precio');
+                alert('Error al actualizar datos');
             }
         } catch (error) {
-            console.error('Error actualizando precio:', error);
+            console.error('Error actualizando datos de pizza:', error);
             alert('Error de conexión');
         }
+    }
+
+    // Mantener función de precio para compatibilidad
+    async updatePizzaPrice(pizzaId) {
+        return this.updatePizzaData(pizzaId);
     }
 
     // Subir imagen
@@ -294,12 +307,21 @@ class PizzeriaAdmin {
                 }
             }
             
+            // Actualizar ingredientes
+            if (pizzaData.ingredients) {
+                const descriptionElement = document.querySelector(`[data-pizza="${pizzaId}"] .pizza-description`);
+                if (descriptionElement) {
+                    descriptionElement.textContent = pizzaData.ingredients;
+                }
+            }
+            
             // Actualizar imagen
             if (pizzaData.imageUrl) {
                 const imageElement = document.querySelector(`[data-pizza="${pizzaId}"] img`);
                 if (imageElement) {
                     imageElement.src = pizzaData.imageUrl;
                 }
+            }
             }
         });
     }

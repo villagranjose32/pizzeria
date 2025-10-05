@@ -183,30 +183,45 @@
     <!-- Panel de Administración -->
     <div id="admin-panel" class="admin-panel" style="display: none;">
         <div class="admin-content">
-            <div class="admin-header">
-                <h2>🔧 Panel de Administración</h2>
-                <div class="admin-header-buttons">
-                    <button id="reset-admin" class="reset-admin">🔄 Restablecer</button>
+            <!-- Login de Admin -->
+            <div id="admin-login" class="admin-login">
+                <div class="admin-header">
+                    <h2>� Autenticación Requerida</h2>
                     <button id="close-admin" class="close-admin">×</button>
                 </div>
+                <div class="login-form">
+                    <input type="password" id="admin-password" placeholder="Contraseña de administrador">
+                    <button id="admin-login-btn" class="admin-btn">Ingresar</button>
+                </div>
             </div>
-            
-            <div class="admin-sections">
-                <div class="admin-section">
-                    <h3>📝 Editar Pizzas</h3>
-                    <div id="admin-pizza-list" class="admin-pizza-list">
-                        <!-- Las pizzas se cargarán dinámicamente aquí -->
+
+            <!-- Contenido de Admin -->
+            <div id="admin-content" class="admin-main" style="display: none;">
+                <div class="admin-header">
+                    <h2>� Panel de Administración</h2>
+                    <div class="admin-header-buttons">
+                        <button id="reset-admin" class="reset-admin">🔄 Restablecer</button>
+                        <button id="close-admin" class="close-admin">×</button>
                     </div>
                 </div>
                 
-                <div class="admin-section">
-                    <h3>➕ Agregar Nueva Pizza</h3>
-                    <div class="new-pizza-form">
-                        <input type="text" id="new-pizza-name" placeholder="Nombre de la pizza">
-                        <textarea id="new-pizza-description" placeholder="Descripción (ingredientes)"></textarea>
-                        <input type="number" id="new-pizza-price" placeholder="Precio" min="0">
-                        <input type="file" id="new-pizza-image" accept="image/*">
-                        <button id="add-pizza-btn" class="admin-btn">Agregar Pizza</button>
+                <div class="admin-sections">
+                    <!-- Configuración de WhatsApp -->
+                    <div class="admin-section">
+                        <h3>📱 Configuración WhatsApp</h3>
+                        <div class="whatsapp-config">
+                            <label for="whatsapp-number">Número de WhatsApp (con código de país):</label>
+                            <input type="tel" id="whatsapp-number" placeholder="54351XXXXXXX" value="543516351524">
+                            <button id="save-whatsapp" class="admin-btn">💾 Guardar Número</button>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Pizzas para Editar -->
+                    <div class="admin-section">
+                        <h3>🍕 Gestión de Pizzas</h3>
+                        <div id="pizzas-list" class="pizzas-list">
+                            <!-- Las pizzas se cargarán dinámicamente aquí -->
+                        </div>
                     </div>
                 </div>
             </div>
