@@ -4,6 +4,7 @@ class PizzeriaAdmin {
         this.pizzaData = this.loadPizzaData();
         this.shouldUpdateMenu = false; // Controlar cuándo recrear el menú
         this.hasAdminChanges = false; // Controlar si hay cambios del admin
+        this.whatsappNumber = this.loadWhatsAppNumber(); // Cargar número de WhatsApp
         this.init();
     }
 
@@ -30,6 +31,11 @@ class PizzeriaAdmin {
         // Botón para resetear datos
         document.getElementById('reset-admin').addEventListener('click', () => {
             this.resetToDefault();
+        });
+
+        // Botón para guardar número de WhatsApp
+        document.getElementById('save-whatsapp').addEventListener('click', () => {
+            this.saveWhatsAppNumber();
         });
 
         // Botón para agregar nueva pizza
@@ -82,12 +88,51 @@ class PizzeriaAdmin {
         this.hasAdminChanges = true;
     }
 
+    loadWhatsAppNumber() {
+        // Cargar número guardado o usar el por defecto
+        const savedNumber = localStorage.getItem('whatsappNumber');
+        return savedNumber || '54930290381'; // Número por defecto actual
+    }
+
+    saveWhatsAppNumber() {
+        const numberInput = document.getElementById('whatsapp-number');
+        const newNumber = numberInput.value.trim();
+        
+        if (!newNumber) {
+            alert('Por favor, ingresa un número de WhatsApp válido');
+            return;
+        }
+        
+        // Validar que sea solo números
+        if (!/^\d+$/.test(newNumber)) {
+            alert('El número debe contener solo dígitos (sin + ni espacios)');
+            return;
+        }
+        
+        // Validar longitud mínima
+        if (newNumber.length < 10) {
+            alert('El número debe tener al menos 10 dígitos');
+            return;
+        }
+        
+        this.whatsappNumber = newNumber;
+        localStorage.setItem('whatsappNumber', newNumber);
+        alert('✅ Número de WhatsApp actualizado correctamente');
+    }
+
+    getWhatsAppNumber() {
+        // Método público para que el carrito acceda al número
+        return this.whatsappNumber;
+    }
+
     resetToDefault() {
         // Método para volver a los datos originales
-        if (confirm('¿Estás seguro de que quieres restablecer todas las pizzas a sus valores originales? Se perderán todos los cambios realizados.')) {
+        if (confirm('¿Estás seguro de que quieres restablecer todas las configuraciones a sus valores originales? Se perderán todos los cambios realizados.')) {
             localStorage.removeItem('pizzaData');
             localStorage.removeItem('hasAdminChanges');
+            localStorage.removeItem('whatsappNumber');
             this.hasAdminChanges = false;
+            this.whatsappNumber = '54930290381';
             this.pizzaData = this.loadPizzaData();
             this.closeAdminPanel();
             location.reload(); // Recargar página para mostrar datos originales
@@ -105,10 +150,16 @@ class PizzeriaAdmin {
         
         document.getElementById('admin-panel').style.display = 'flex';
         this.loadAdminPanel();
+        this.loadConfigPanel();
     }
 
     closeAdminPanel() {
         document.getElementById('admin-panel').style.display = 'none';
+    }
+
+    loadConfigPanel() {
+        // Cargar configuración actual en el panel
+        document.getElementById('whatsapp-number').value = this.whatsappNumber;
     }
 
     loadAdminPanel() {

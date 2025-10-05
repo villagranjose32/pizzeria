@@ -256,8 +256,13 @@ class PizzeriaCart {
     }
 
     enviarWhatsApp(nombre, direccion, observaciones) {
-        // Número de WhatsApp de la pizzería (reemplaza con el número real)
-        const numeroWhatsApp = '54930290381'; // Número actualizado de la pizzería
+        // Obtener número de WhatsApp desde el admin o usar el por defecto
+        let numeroWhatsApp = '54930290381'; // Número por defecto
+        
+        // Si el admin está disponible, usar el número configurado
+        if (window.pizzaAdmin) {
+            numeroWhatsApp = pizzaAdmin.getWhatsAppNumber();
+        }
         
         // Construir mensaje para WhatsApp
         let mensaje = `🍕 *NUEVO PEDIDO DE PIZZERÍA* 🍕\n\n`;

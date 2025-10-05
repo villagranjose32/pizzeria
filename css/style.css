@@ -821,6 +821,50 @@ body {
     min-height: 60px;
 }
 
+/* Estilos para configuración general */
+.general-config {
+    background: #4a4a4a;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.config-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.config-item label {
+    color: #e0e0e0;
+    font-weight: bold;
+    min-width: 150px;
+}
+
+.config-item input {
+    background: #5a5a5a;
+    border: 1px solid #777;
+    color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Montserrat', sans-serif;
+    flex: 1;
+    min-width: 200px;
+}
+
+.config-item input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+.config-item .admin-btn {
+    margin: 0;
+    min-width: 100px;
+}
+
 /* Responsividad para el panel admin */
 @media (max-width: 768px) {
     .admin-pizza-item {
