@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzería - Menú de Pizzas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="page-header">
+        <button id="admin-btn" class="admin-button">👤 Admin</button>
+        <h1>Nuestro Menú</h1>
+        <button id="cart-btn" class="cart-button">
+            🛒 Carrito <span id="cart-count" class="cart-count">0</span>
+        </button>
+    </header>
+
+    <main class="menu-container">
+        <div class="pizza-row">
+            <div class="pizza-card">
+                <img src="images/especial.jpg" alt="Pizza Especial">
+                <h2 class="pizza-title">Especial</h2>
+                <p class="pizza-description">Salsa, muzza norrella</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4000</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+
+            <div class="pizza-card">
+                <img src="images/comun.jpg" alt="Pizza Común">
+                <h2 class="pizza-title">Común</h2>
+                <p class="pizza-description">Salsa, mozzarella</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4200</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+
+            <div class="pizza-card">
+                <img src="images/choclo.jpg" alt="Pizza Choclo">
+                <h2 class="pizza-title">Choclo</h2>
+                <p class="pizza-description">Salsa, mozzarella, choclo</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4200</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pizza-row">
+            <div class="pizza-card">
+                <img src="images/muzzarella.jpg" alt="Pizza Muzzarella">
+                <h2 class="pizza-title">Muzzarella</h2>
+                <p class="pizza-description">Salsa, mozzarella, orégano</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4000</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+
+            <div class="pizza-card">
+                <img src="images/napolitana.jpg" alt="Pizza Napolitana">
+                <h2 class="pizza-title">Napolitana</h2>
+                <p class="pizza-description">Salsa, mozzarella, tomate, ajo</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4300</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+
+            <div class="pizza-card">
+                <img src="images/fugazzetta.jpg" alt="Pizza Fugazzetta">
+                <h2 class="pizza-title">Fugazzetta</h2>
+                <p class="pizza-description">Muzzarella, orégano, cebolla</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4300</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pizza-row">
+            <div class="pizza-card">
+                <img src="images/calabresa.jpg" alt="Pizza Calabresa">
+                <h2 class="pizza-title">Calabresa</h2>
+                <p class="pizza-description">Muzzarella, peperoni, orégano</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4400</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+
+            <div class="pizza-card">
+                <img src="images/anana.jpg" alt="Pizza Ananá">
+                <h2 class="pizza-title">Ananá</h2>
+                <p class="pizza-description">Salsa, mozzarella, piña</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4200</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+
+            <div class="pizza-card">
+                <img src="images/palmitos.jpg" alt="Pizza Palmitos">
+                <h2 class="pizza-title">Palmitos</h2>
+                <p class="pizza-description">Salsa, mozzarella, palmitos, salsa golf</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4500</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pizza-row">
+            <div class="pizza-card">
+                <img src="images/rucula.jpg" alt="Pizza Rúcula">
+                <h2 class="pizza-title">Rúcula</h2>
+                <p class="pizza-description">Salsa, muzzarella, rúcula, parmesano</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4400</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+
+            <div class="pizza-card">
+                <img src="images/primavera.jpg" alt="Pizza Primavera">
+                <h2 class="pizza-title">Primavera</h2>
+                <p class="pizza-description">Salsa, muzzarella, jamón, tomate</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4400</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+
+            <div class="pizza-card">
+                <img src="images/4quesos.jpg" alt="Pizza 4 Quesos">
+                <h2 class="pizza-title">4 Quesos</h2>
+                <p class="pizza-description">Muzzarella, parmesano, queso azul, fontina</p>
+                <div class="pizza-footer">
+                    <span class="pizza-price">$4500</span>
+                    <button class="btn-pizza-type" data-type="entera">Entera</button>
+                    <button class="btn-pedir">Pedir</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Panel del Carrito -->
+    <div id="cart-panel" class="cart-panel" style="display: none;">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>🛒 Carrito de Compras</h2>
+                <button id="close-cart" class="close-cart">×</button>
+            </div>
+            
+            <div class="cart-body">
+                <div id="cart-details" class="cart-details">
+                    <!-- Los detalles del carrito se cargarán aquí -->
+                </div>
+                
+                <div class="cart-actions">
+                    <button id="clear-cart" class="cart-btn clear">🗑️ Vaciar Carrito</button>
+                    <button id="continue-shopping" class="cart-btn continue">🛍️ Seguir Comprando</button>
+                    <button id="proceed-checkout" class="cart-btn checkout">✅ Proceder al Pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel de Administración -->
+    <div id="admin-panel" class="admin-panel" style="display: none;">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>🔧 Panel de Administración</h2>
+                <div class="admin-header-buttons">
+                    <button id="reset-admin" class="reset-admin">🔄 Restablecer</button>
+                    <button id="close-admin" class="close-admin">×</button>
+                </div>
+            </div>
+            
+            <div class="admin-sections">
+                <div class="admin-section">
+                    <h3>📝 Editar Pizzas</h3>
+                    <div id="admin-pizza-list" class="admin-pizza-list">
+                        <!-- Las pizzas se cargarán dinámicamente aquí -->
+                    </div>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>➕ Agregar Nueva Pizza</h3>
+                    <div class="new-pizza-form">
+                        <input type="text" id="new-pizza-name" placeholder="Nombre de la pizza">
+                        <textarea id="new-pizza-description" placeholder="Descripción (ingredientes)"></textarea>
+                        <input type="number" id="new-pizza-price" placeholder="Precio" min="0">
+                        <input type="file" id="new-pizza-image" accept="image/*">
+                        <button id="add-pizza-btn" class="admin-btn">Agregar Pizza</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="order-summary">
+        <div class="summary-item">
+            <label for="nombre">Nombre y Apellido</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        
+        <div class="summary-item">
+            <label>Tipo de Entrega</label>
+            <div class="delivery-options">
+                <button type="button" id="delivery-btn" class="delivery-option active" data-type="delivery">
+                    🚚 Envío a Domicilio
+                </button>
+                <button type="button" id="pickup-btn" class="delivery-option" data-type="pickup">
+                    🏪 Retiro en Local
+                </button>
+            </div>
+        </div>
+        
+        <div class="summary-item" id="direccion-container">
+            <label for="direccion">Dirección de Envío</label>
+            <input type="text" id="direccion" name="direccion" placeholder="Ingresa tu dirección completa" required>
+        </div>
+        
+        <div class="summary-item">
+            <label for="observaciones">Observaciones</label>
+            <textarea id="observaciones" name="observaciones" placeholder="Ej: Sin cebolla, cocción especial, etc." rows="3"></textarea>
+        </div>
+        <div class="summary-item">
+            <label for="total">Monto Total</label>
+            <input type="text" id="total" name="total" value="$0" readonly>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <button class="btn-finalizar-pedido" id="btn-finalizar">Enviar Pedido por WhatsApp</button>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
